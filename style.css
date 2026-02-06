@@ -1,0 +1,12 @@
+body{
+   background-color:black;
+   color:white;
+   font-family: Arial;
+   padding:20px;
+}
+
+h1{
+   color:lime;
+   text-align:center;
+   font-size:40px;
+}
