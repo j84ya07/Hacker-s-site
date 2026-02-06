@@ -10,3 +10,30 @@ h1{
    text-align:center;
    font-size:40px;
 }
+body{
+    background-color:black;
+    color:white;
+    font-family: Arial;
+    text-align:center;
+    padding:20px;
+}
+
+h1{
+    color:lime;
+}
+
+input{
+    padding:10px;
+    margin:10px;
+    width:250px;
+    border:none;
+    border-radius:5px;
+}
+
+button{
+    padding:10px 20px;
+    background-color:lime;
+    border:none;
+    border-radius:5px;
+    font-weight:bold;
+}
