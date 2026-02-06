@@ -6,7 +6,7 @@ title.addEventListener("click", function(){
 
     alert("Hacker mode activated 😎");
 
-    title.innerText = "WELCOME TO HACKER MODE";
+    title.innerText = "Aur bhai kya haal chaal";
 
     title.style.color = "red";
 
