@@ -37,3 +37,39 @@ button{
     border-radius:5px;
     font-weight:bold;
 }
+body{
+    background-color:black;
+    color:white;
+    font-family:Arial;
+    text-align:center;
+}
+
+h1{
+    color:lime;
+}
+
+.login-box{
+    margin:50px auto;
+    width:300px;
+    padding:20px;
+    border:2px solid lime;
+    border-radius:10px;
+    box-shadow:0 0 15px lime;
+}
+
+input{
+    padding:10px;
+    margin:10px;
+    width:90%;
+    background:black;
+    color:lime;
+    border:1px solid lime;
+}
+
+button{
+    padding:10px;
+    background:lime;
+    border:none;
+    font-weight:bold;
+    cursor:pointer;
+}
