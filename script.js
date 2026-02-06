@@ -15,3 +15,11 @@ title.addEventListener("click", function(){
 });
 
 };
+function login(){
+
+let mobile = document.getElementById("mobile").value;
+let email = document.getElementById("email").value;
+
+alert("Mobile: " + mobile + "\nEmail: " + email);
+
+}
