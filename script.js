@@ -13,19 +13,26 @@ title.addEventListener("click", function(){
 });
 
 
-// 🔥 Login function (final)
 function login(){
 
 let mobile = document.getElementById("mobile").value;
 let email = document.getElementById("email").value;
 
-// validation
+// empty check
 if(mobile === "" || email === ""){
-    alert("Sab fill kar bhai 😎");
-    return;
+alert("Sab fill kar 😎");
+return;
 }
 
-// fake hacker loading
+// VALID credentials check
+if(mobile === "9876543210" && email === "test@gmail.com"){
+
 document.body.innerHTML = "<h1 style='color:lime;'>ACCESS GRANTED 😈</h1>";
+
+}else{
+
+alert("Invalid Credentials ❌");
+
+}
 
 }
