@@ -1,3 +1,4 @@
+alert("JS WORKING 😎");
 // 😎 Hacker typing animation (optional - heading auto type)
 let text = "ACCESSING SYSTEM...";
 let index = 0;
