@@ -1,4 +1,4 @@
-// heading click effect (पहले वाला)
+heading click effect (पहले वाला)
 let title = document.getElementById("title");
 
 title.addEventListener("click", function(){
