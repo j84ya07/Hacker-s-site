@@ -1,37 +1,38 @@
-heading click effect (पहले वाला)
+// 😎 Hacker typing animation (optional - heading auto type)
+let text = "ACCESSING SYSTEM...";
+let index = 0;
 let title = document.getElementById("title");
 
-title.addEventListener("click", function(){
-
-    alert("Hacker mode activated 😎");
-
-    title.innerText = "WELCOME BHAI 🗿✨";
-
-    title.style.color = "red";
-
-    document.body.style.backgroundColor = "black";
-});
+function typeEffect(){
+    if(title && index < text.length){
+        title.innerHTML += text.charAt(index);
+        index++;
+        setTimeout(typeEffect,100);
+    }
+}
+typeEffect();
 
 
+// 🔥 FINAL LOGIN FUNCTION
 function login(){
 
-let mobile = document.getElementById("mobile").value;
-let email = document.getElementById("email").value;
+let mobile = document.getElementById("mobile").value.trim();
+let email = document.getElementById("email").value.trim();
 
 // empty check
 if(mobile === "" || email === ""){
-alert("Sab fill kar 😎");
-return;
+    alert("Sab fill kar 😎");
+    return;
 }
 
-// VALID credentials check
+// valid credentials check
 if(mobile === "9876543210" && email === "test@gmail.com"){
 
-document.body.innerHTML = "<h1 style='color:lime;'>ACCESS GRANTED 😈</h1>";
+    document.body.innerHTML = "<h1 style='color:lime; text-align:center;'>ACCESS GRANTED 😈</h1>";
 
 }else{
 
-alert("Invalid Credentials ❌");
+    alert("Invalid Credentials ❌");
 
 }
 
