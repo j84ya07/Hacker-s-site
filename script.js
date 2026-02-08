@@ -231,3 +231,31 @@ document.body.style.transform="translateX(0px)";
 },6000);
 
 }
+
+// 😈 PRO PHONE SELECTOR
+
+let phoneInput = document.querySelector("#mobile");
+
+let iti = window.intlTelInput(phoneInput,{
+initialCountry:"in",
+separateDialCode:true,
+preferredCountries:["in","us","gb"]
+});
+
+phoneInput.addEventListener("input",function(){
+
+let fullNumber = iti.getNumber();
+
+if(fullNumber.startsWith("+91")){
+
+let indiaPattern=/^\+91[6-9]\d{9}$/;
+
+if(indiaPattern.test(fullNumber)){
+phoneInput.style.border="2px solid lime";
+}else{
+phoneInput.style.border="2px solid red";
+}
+
+}
+
+});
