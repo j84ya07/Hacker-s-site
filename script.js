@@ -1,3 +1,10 @@
+document.addEventListener("DOMContentLoaded", function(){
+
+document.getElementById("title").innerText = " Kya Gunda banega re tu 😈";
+
+document.getElementById("status").innerText = "System accessing...";
+
+});
 function login(){
 
 let mobile=document.getElementById("mobile").value.trim();
