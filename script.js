@@ -1,4 +1,11 @@
 // =======================
+// GLOBAL PHONE INSTANCE
+// =======================
+
+let iti;
+
+
+// =======================
 // PAGE LOAD
 // =======================
 
@@ -9,12 +16,9 @@ document.getElementById("title").innerText =
 
 startStatusTyping();
 
-
-// COUNTRY SELECTOR
-
 let phoneInput=document.querySelector("#mobile");
 
-window.intlTelInput(phoneInput,{
+iti = window.intlTelInput(phoneInput,{
 initialCountry:"in",
 separateDialCode:true,
 preferredCountries:["in","us","gb"]
@@ -24,9 +28,7 @@ preferredCountries:["in","us","gb"]
 
 
 
-// =======================
 // STATUS TYPING
-// =======================
 
 function startStatusTyping(){
 
@@ -50,13 +52,12 @@ if(i>=text.length) clearInterval(typing);
 
 
 // =======================
-// LOGIN FUNCTION
+// LOGIN
 // =======================
 
 function login(){
 
 let phoneInput=document.querySelector("#mobile");
-let iti=window.intlTelInputGlobals.getInstance(phoneInput);
 
 let mobile=phoneInput.value.trim();
 let email=document.getElementById("email").value.trim();
@@ -76,17 +77,12 @@ alert("Email invalid ❌");
 return;
 }
 
-
-// DEMO LOGIN CHECK
+// DEMO LOGIN
 
 if(email==="test@gmail.com"){
-
 loadHackerMode();
-
 }else{
-
 alert("Invalid Credentials ❌");
-
 }
 
 }
@@ -94,7 +90,7 @@ alert("Invalid Credentials ❌");
 
 
 // =======================
-// HACKER INTERFACE
+// HACKER MODE
 // =======================
 
 function loadHackerMode(){
@@ -103,8 +99,9 @@ document.body.innerHTML=`
 
 <canvas id="matrix"></canvas>
 
-<div id="terminal">
+<div id="terminal" style="position:fixed;top:0;left:0;width:100%;height:100%;padding:15px;color:lime;font-family:monospace;overflow:auto;z-index:2;">
 <p id="hackText"></p>
+<input id="cmd" placeholder="type command..." style="background:black;color:lime;border:1px solid lime;width:100%">
 <span id="cursor">_</span>
 </div>
 
@@ -114,14 +111,14 @@ applyStyle();
 matrixRain();
 startTerminalTyping();
 blinkCursor();
+terminalCommands();
+autoScroll();
 
 }
 
 
 
-// =======================
 // STYLE
-// =======================
 
 function applyStyle(){
 
@@ -133,9 +130,7 @@ document.body.style.fontFamily="monospace";
 
 
 
-// =======================
 // MATRIX RAIN
-// =======================
 
 function matrixRain(){
 
@@ -182,9 +177,7 @@ setInterval(draw,35);
 
 
 
-// =======================
 // TERMINAL TYPING
-// =======================
 
 function startTerminalTyping(){
 
@@ -218,14 +211,9 @@ i++;
 if(i>=text.length){
 
 clearInterval(typing);
-
 el.innerHTML+="<br>";
-
-window.scrollTo(0,document.body.scrollHeight);
-
 index++;
-
-setTimeout(typeLine,500);
+setTimeout(typeLine,400);
 
 }
 
@@ -239,9 +227,7 @@ typeLine();
 
 
 
-// =======================
-// BLINKING CURSOR
-// =======================
+// BLINK CURSOR
 
 function blinkCursor(){
 
@@ -259,3 +245,59 @@ c.style.visibility==="hidden"?"visible":"hidden";
 },500);
 
 }
+
+
+
+// AUTO SCROLL
+
+function autoScroll(){
+
+setInterval(()=>{
+
+let terminal=document.getElementById("terminal");
+
+if(terminal){
+terminal.scrollTop=terminal.scrollHeight;
+}
+
+},200);
+
+}
+
+
+
+// TERMINAL COMMANDS
+
+function terminalCommands(){
+
+document.getElementById("cmd").addEventListener("keydown",function(e){
+
+if(e.key==="Enter"){
+
+let value=this.value.trim().toLowerCase();
+
+let output=document.getElementById("hackText");
+
+if(value==="help"){
+output.innerHTML+="Available: help scan hack clear<br>";
+}
+else if(value==="scan"){
+output.innerHTML+="Scanning network... OK 😈<br>";
+}
+else if(value==="hack"){
+output.innerHTML+="Injecting payload... ROOT ACCESS 😈<br>";
+}
+else if(value==="clear"){
+output.innerHTML="";
+}
+else{
+output.innerHTML+="Unknown command<br>";
+}
+
+this.value="";
+
+}
+
+});
+
+            }
