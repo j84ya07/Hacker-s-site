@@ -73,3 +73,40 @@ button{
     font-weight:bold;
     cursor:pointer;
 }
+/* 🌑 Country dropdown background black */
+.iti__country-list{
+    background-color:black !important;
+    color:lime !important;
+    border:1px solid lime;
+}
+
+/* country item */
+.iti__country{
+    background-color:black !important;
+    color:lime !important;
+}
+
+/* hover effect */
+.iti__country:hover{
+    background-color:#111 !important;
+}
+
+/* country code color */
+.iti__dial-code{
+    color:lime !important;
+}
+
+/* input box hacker style */
+.iti input{
+    background:black;
+    color:lime;
+    border:1px solid lime;
+}
+
+/* scrollbar hacker style (optional) */
+.iti__country-list::-webkit-scrollbar{
+    width:5px;
+}
+.iti__country-list::-webkit-scrollbar-thumb{
+    background:lime;
+   }
