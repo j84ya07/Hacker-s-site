@@ -1,40 +1,61 @@
-alert("JS WORKING 😎");
-// 😎 Hacker typing animation (optional - heading auto type)
-let text = "ACCESSING SYSTEM...";
-let index = 0;
-let title = document.getElementById("title");
+// 😈 TITLE TYPING ANIMATION
+let titleText = "KYA GUNDA BNEGA RE TU";
+let titleIndex = 0;
 
-function typeEffect(){
-    if(title && index < text.length){
-        title.innerHTML += text.charAt(index);
-        index++;
-        setTimeout(typeEffect,100);
+function typeTitle() {
+    if (titleIndex < titleText.length) {
+        document.getElementById("title").innerHTML += titleText.charAt(titleIndex);
+        titleIndex++;
+        setTimeout(typeTitle, 100);
     }
 }
-typeEffect();
+
+
+// 🔥 STATUS TYPING
+let statusText = "ACCESSING SYSTEM...";
+let statusIndex = 0;
+
+function typeStatus() {
+    if (statusIndex < statusText.length) {
+        document.getElementById("status").innerHTML += statusText.charAt(statusIndex);
+        statusIndex++;
+        setTimeout(typeStatus, 80);
+    }
+}
+
+
+// 🚀 PAGE LOAD START
+window.onload = function () {
+    typeTitle();
+    setTimeout(typeStatus, 2000);
+};
 
 
 // 🔥 FINAL LOGIN FUNCTION
-function login(){
+function login() {
 
-let mobile = document.getElementById("mobile").value.trim();
-let email = document.getElementById("email").value.trim();
+    let mobile = document.getElementById("mobile").value.trim();
+    let email = document.getElementById("email").value.trim();
 
-// empty check
-if(mobile === "" || email === ""){
-    alert("Sab fill kar 😎");
-    return;
-}
+    // empty check
+    if (mobile === "" || email === "") {
+        alert("Sab fill kar 😎");
+        return;
+    }
 
-// valid credentials check
-if(mobile === "9876543210" && email === "test@gmail.com"){
+    // mobile must be 10 digits
+    if (mobile.length !== 10 || isNaN(mobile)) {
+        alert("Mobile number 10 digit hona chahiye ❌");
+        return;
+    }
 
-    document.body.innerHTML = "<h1 style='color:lime; text-align:center;'>ACCESS GRANTED 😈</h1>";
+    // simple email validation
+    if (!email.includes("@") || !email.includes(".")) {
+        alert("Invalid Email ❌");
+        return;
+    }
 
-}else{
-
-    alert("Invalid Credentials ❌");
-
-}
-
+    // SUCCESS
+    document.body.innerHTML =
+        "<h1 style='color:lime;text-align:center;'>ACCESS GRANTED 😈</h1>";
 }
