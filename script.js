@@ -1,76 +1,119 @@
 // =======================
-// LOGIN
+// PAGE LOAD
+// =======================
+
+document.addEventListener("DOMContentLoaded", function(){
+
+document.getElementById("title").innerText =
+"Kya Gunda banega re tu 😈";
+
+startStatusTyping();
+
+
+// COUNTRY SELECTOR
+
+let phoneInput=document.querySelector("#mobile");
+
+window.intlTelInput(phoneInput,{
+initialCountry:"in",
+separateDialCode:true,
+preferredCountries:["in","us","gb"]
+});
+
+});
+
+
+
+// =======================
+// STATUS TYPING
+// =======================
+
+function startStatusTyping(){
+
+let text="System accessing...";
+let el=document.getElementById("status");
+
+let i=0;
+
+let typing=setInterval(()=>{
+
+el.innerHTML+=text.charAt(i);
+
+i++;
+
+if(i>=text.length) clearInterval(typing);
+
+},80);
+
+}
+
+
+
+// =======================
+// LOGIN FUNCTION
 // =======================
 
 function login(){
-bootScreen();
+
+let phoneInput=document.querySelector("#mobile");
+let iti=window.intlTelInputGlobals.getInstance(phoneInput);
+
+let mobile=phoneInput.value.trim();
+let email=document.getElementById("email").value.trim();
+
+if(mobile===""||email===""){
+alert("Sab fill kar 😎");
+return;
+}
+
+if(!iti.isValidNumber()){
+alert("Invalid number ❌");
+return;
+}
+
+if(!email.includes("@")){
+alert("Email invalid ❌");
+return;
+}
+
+
+// DEMO LOGIN CHECK
+
+if(email==="test@gmail.com"){
+
+loadHackerMode();
+
+}else{
+
+alert("Invalid Credentials ❌");
+
+}
+
 }
 
 
 
 // =======================
-// BOOT SCREEN
+// HACKER INTERFACE
 // =======================
 
-function bootScreen(){
-
-document.body.innerHTML=
-"<div style='padding:20px'>Booting UltraLegend MAX++...</div>";
-
-document.body.style.background="black";
-document.body.style.color="lime";
-document.body.style.fontFamily="monospace";
-
-setTimeout(loadDesktop,1500);
-
-}
-
-
-
-// =======================
-// DESKTOP
-// =======================
-
-let selectedIcon=null;
-
-function loadDesktop(){
+function loadHackerMode(){
 
 document.body.innerHTML=`
 
 <canvas id="matrix"></canvas>
 
-<div id="desktop"></div>
-
-<div id="taskbar">
-<button onclick="toggleStart()">☰ Start</button>
-<button onclick="changeTheme('lime')">Green</button>
-<button onclick="changeTheme('red')">Red</button>
-<button onclick="changeTheme('cyan')">Blue</button>
+<div id="terminal">
+<p id="hackText"></p>
+<span id="cursor">_</span>
 </div>
-
-<div id="startMenu" style="display:none">
-<button onclick="openTerminal()">💻 Terminal</button>
-<button onclick="openEditor()">📝 Editor</button>
-<button onclick="createFolder()">📂 New Folder</button>
-</div>
-
-<div id="contextMenu" style="display:none">
-<div onclick="createFolder()">New Folder</div>
-<div onclick="renameSelected()">Rename</div>
-<div onclick="deleteSelected()">Delete</div>
-</div>
-
-<div id="notification"></div>
 
 `;
 
 applyStyle();
 matrixRain();
-
-addIcon("💻 Terminal",20);
-addIcon("📁 Files",60);
-
-document.addEventListener("contextmenu",showMenu);
+startTerminalTyping();
+blinkCursor();
 
 }
 
@@ -82,70 +125,16 @@ document.addEventListener("contextmenu",showMenu);
 
 function applyStyle(){
 
-let style=document.createElement("style");
-
-style.innerHTML=`
-
-body{margin:0;color:lime;font-family:monospace;overflow:hidden}
-
-.icon{position:absolute;left:20px;cursor:pointer}
-
-.window{
-position:absolute;
-top:120px;
-left:120px;
-width:420px;
-height:300px;
-background:black;
-border:1px solid currentColor
-}
-
-.titlebar{
-background:#001100;
-cursor:move;
-display:flex;
-justify-content:space-between;
-padding:3px
-}
-
-#taskbar{
-position:fixed;
-bottom:0;
-width:100%;
-background:#001100;
-padding:5px
-}
-
-#startMenu{
-position:fixed;
-bottom:30px;
-left:0;
-background:black;
-border:1px solid lime
-}
-
-#contextMenu{
-position:absolute;
-background:black;
-border:1px solid lime
-}
-
-#notification{
-position:fixed;
-right:10px;
-bottom:50px;
-}
-
-`;
-
-document.head.appendChild(style);
+document.body.style.background="black";
+document.body.style.color="lime";
+document.body.style.fontFamily="monospace";
 
 }
 
 
 
 // =======================
-// MATRIX BACKGROUND
+// MATRIX RAIN
 // =======================
 
 function matrixRain(){
@@ -168,7 +157,7 @@ function draw(){
 ctx.fillStyle="rgba(0,0,0,0.05)";
 ctx.fillRect(0,0,canvas.width,canvas.height);
 
-ctx.fillStyle="currentColor";
+ctx.fillStyle="#0f0";
 ctx.font=fontSize+"px monospace";
 
 for(let i=0;i<drops.length;i++){
@@ -194,187 +183,22 @@ setInterval(draw,35);
 
 
 // =======================
-// ICON SYSTEM
+// TERMINAL TYPING
 // =======================
 
-function addIcon(name,top){
+function startTerminalTyping(){
 
-let icon=document.createElement("div");
-
-icon.className="icon";
-icon.innerText=name;
-icon.style.top=top+"px";
-
-icon.onclick=function(){
-
-selectedIcon=icon;
-
-if(name.includes("Terminal")) openTerminal();
-
-};
-
-makeDraggable(icon);
-
-document.getElementById("desktop").appendChild(icon);
-
-}
-
-function createFolder(){
-
-addIcon("📂 New Folder",Math.random()*300);
-
-notify("Folder Created");
-
-}
-
-
-
-// DRAG
-
-function makeDraggable(el){
-
-let isDown=false;
-let offset=[0,0];
-
-el.addEventListener("mousedown",function(e){
-
-isDown=true;
-offset=[el.offsetLeft-e.clientX,el.offsetTop-e.clientY];
-selectedIcon=el;
-
-});
-
-document.addEventListener("mouseup",()=>isDown=false);
-
-document.addEventListener("mousemove",function(e){
-
-if(isDown){
-
-el.style.left=(e.clientX+offset[0])+'px';
-el.style.top=(e.clientY+offset[1])+'px';
-
-}
-
-});
-
-}
-
-
-
-// =======================
-// CONTEXT MENU
-// =======================
-
-function showMenu(e){
-
-e.preventDefault();
-
-let menu=document.getElementById("contextMenu");
-
-menu.style.display="block";
-menu.style.left=e.pageX+"px";
-menu.style.top=e.pageY+"px";
-
-}
-
-function renameSelected(){
-
-if(selectedIcon){
-
-let newName=prompt("Rename:");
-
-if(newName) selectedIcon.innerText=newName;
-
-}
-
-}
-
-function deleteSelected(){
-
-if(selectedIcon){
-
-selectedIcon.remove();
-notify("Deleted");
-
-}
-
-}
-
-
-
-// =======================
-// WINDOWS
-// =======================
-
-function createWindow(title,content){
-
-let win=document.createElement("div");
-
-win.className="window";
-
-win.innerHTML=`
-
-<div class="titlebar">
-
-<span>${title}</span>
-
-<div>
-<button onclick="maximizeWindow(this)">⬜</button>
-<button onclick="this.closest('.window').remove()">X</button>
-</div>
-
-</div>
-
-<div>${content}</div>
-
-`;
-
-document.body.appendChild(win);
-
-makeDraggable(win);
-
-}
-
-
-
-// MAXIMIZE
-
-function maximizeWindow(btn){
-
-let win=btn.closest(".window");
-
-win.style.top="0";
-win.style.left="0";
-win.style.width="100%";
-win.style.height="95%";
-
-}
-
-
-
-// =======================
-// TERMINAL WITH DYNAMIC TEXT
-// =======================
-
-function openTerminal(){
-
-createWindow("Terminal",
-"<div id='terminalText'></div><input id='cmd' placeholder='type command...'>");
-
-startDynamicTyping();
-terminalCommands();
-
-}
-
-function startDynamicTyping(){
-
-let el=document.getElementById("terminalText");
+let el=document.getElementById("hackText");
 
 let lines=[
-"Initializing system...",
-"Scanning memory...",
+
+"Initializing secure terminal...",
+"Connecting to remote server...",
+"Scanning memory sectors...",
 "Bypassing firewall...",
+"Decrypting encrypted files...",
 "ACCESS GRANTED 😈"
+
 ];
 
 let index=0;
@@ -397,13 +221,15 @@ clearInterval(typing);
 
 el.innerHTML+="<br>";
 
+window.scrollTo(0,document.body.scrollHeight);
+
 index++;
 
 setTimeout(typeLine,500);
 
 }
 
-},40);
+},30);
 
 }
 
@@ -411,79 +237,25 @@ typeLine();
 
 }
 
-function terminalCommands(){
-
-let input=document.getElementById("cmd");
-
-input.addEventListener("keydown",function(e){
-
-if(e.key==="Enter"){
-
-let el=document.getElementById("terminalText");
-
-let cmd=this.value;
-
-if(cmd==="help") el.innerHTML+="Available: help scan clear<br>";
-else if(cmd==="scan") el.innerHTML+="Scanning network...<br>";
-else if(cmd==="clear") el.innerHTML="";
-else el.innerHTML+="Unknown command<br>";
-
-this.value="";
-
-}
-
-});
-
-}
-
 
 
 // =======================
-// EDITOR
+// BLINKING CURSOR
 // =======================
 
-function openEditor(){
+function blinkCursor(){
 
-createWindow("Editor",
-"<textarea style='width:100%;height:220px;background:black;color:lime'></textarea>");
+setInterval(()=>{
 
-}
+let c=document.getElementById("cursor");
 
+if(c){
 
-
-// START MENU
-
-function toggleStart(){
-
-let menu=document.getElementById("startMenu");
-
-menu.style.display =
-menu.style.display==="none"?"block":"none";
+c.style.visibility=
+c.style.visibility==="hidden"?"visible":"hidden";
 
 }
 
-
-
-// THEME
-
-function changeTheme(color){
-
-document.body.style.color=color;
-
-}
-
-
-
-// NOTIFICATION
-
-function notify(text){
-
-let n=document.createElement("div");
-
-n.innerText=text;
-
-document.getElementById("notification").appendChild(n);
-
-setTimeout(()=>n.remove(),2000);
+},500);
 
 }
