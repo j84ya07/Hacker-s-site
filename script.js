@@ -57,36 +57,57 @@ if(i>=text.length) clearInterval(typing);
 
 function login(){
 
-let phoneInput=document.querySelector("#mobile");
+let phoneInput = document.querySelector("#mobile");
 
-let mobile=phoneInput.value.trim();
-let email=document.getElementById("email").value.trim();
+// intlTelInput instance
+let itiInstance = window.intlTelInputGlobals.getInstance(phoneInput);
 
-if(mobile===""||email===""){
+let fullNumber = itiInstance.getNumber(); // full number with country code
+let email = document.getElementById("email").value.trim();
+
+
+// 😈 EMPTY CHECK
+if(fullNumber === "" || email === ""){
 alert("Sab fill kar 😎");
 return;
 }
 
-if(!iti.isValidNumber()){
-alert("Invalid number ❌");
+
+// 🔥 ALL COUNTRY VALIDATION
+if(!itiInstance.isValidNumber()){
+alert("Invalid number according to selected country ❌");
 return;
 }
 
+
+// 🇮🇳 INDIA EXTRA VALIDATION
+let countryData = itiInstance.getSelectedCountryData();
+
+if(countryData.iso2 === "in"){
+
+let localNumber = fullNumber.replace("+91","");
+
+let indiaPattern = /^[6-9]\d{9}$/;
+
+if(!indiaPattern.test(localNumber)){
+alert("Invalid Indian mobile number ❌");
+return;
+}
+
+}
+
+
+// 📧 EMAIL CHECK
 if(!email.includes("@")){
 alert("Email invalid ❌");
 return;
 }
 
-// DEMO LOGIN
 
-if(email==="test@gmail.com"){
+// 😈 LOGIN SUCCESS (tera existing hacker mode)
 loadHackerMode();
-}else{
-alert("Invalid Credentials ❌");
-}
 
 }
-
 
 
 // =======================
